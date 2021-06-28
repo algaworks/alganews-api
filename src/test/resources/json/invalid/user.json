@@ -1,0 +1,35 @@
+{
+	"name": "Editor",
+	"bio": "Lorem.",
+	"taxpayerId": "43202043870",
+	"birthdate": "1999-10-28",
+	"bankAccount": {
+		"bankCode": "001",
+		"agency": "123",
+		"number": "19",
+		"digit": "1",
+		"type": "SAVING"
+	},
+	"pricePerWord": 1.10,
+	"role": "EDITOR",
+	"skills": [
+		{
+			"name": "C#",
+			"percentage": "10"
+		},
+		{
+			"name": "Node",
+			"percentage": "44"
+		},
+		{
+			"name": "Java",
+			"percentage": "84"
+		}
+	],
+	"phone": "+55 95049-0813",
+	"location": {
+		"country": "br",
+		"state": "state",
+		"city": "city"
+	}
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+    version="2.2">
+
+	<named-native-query name="getMonthlyRevenuesAndExpenses">
+		<query>
+			select
+			date_format(c.transacted_on, '%Y-%m') as yearMonthValue,
+			coalesce(sum(ce.amount), 0.0) as totalExpenses,
+			coalesce(sum(cr.amount), 0.0) as totalRevenues
+			from cash_flow_entry c
+			left join cash_flow_entry ce on ce.id = c.id and ce.type = 'EXPENSE'
+			left join cash_flow_entry cr on cr.id = c.id and cr.type = 'REVENUE'
+			where c.transacted_on between date_sub(:endOn, interval 11 year_month ) and :endOn
+			group by 1
+			order by 1
+		</query>
+	</named-native-query>
+
+	<named-native-query name="getMonthlyEarnings">
+		<query>
+			select
+			date_format(pe.created_at , '%Y-%m') as yearMonthValue,
+			cast(coalesce(avg(pe.earnings_total_amount), 0.0) as decimal(10, 2)) as totalPlatformAverageAmount,
+			cast(coalesce(avg(pea.earnings_total_amount), 0.0) as decimal(10, 2)) as totalAmount
+			from post pe
+			left join post pea on pe.id = pea.id and pea.editor_id = :editorId
+			where pe.created_at between date_sub(:endOn, interval 11 year_month ) and :endOn
+			and pe.deleted = false
+			group by 1
+			order by 1
+		</query>
+	</named-native-query>
+
+	<named-native-query name="getTop3TagsByEditorId">
+		<query>
+			select
+			(
+				cast(count(name) * 100 /
+					(
+						select
+						count(id)
+						from
+						post
+						where
+						post.editor_id = :editorId) as decimal(10, 2)
+					)
+			) as percentage,
+			name as tagName
+			from tag
+			inner join post on post.id = tag.post_id
+			where post.editor_id = :editorId
+			group by name
+			order by 1 desc
+			limit 3
+		</query>
+	</named-native-query>
+	
+</entity-mappings>

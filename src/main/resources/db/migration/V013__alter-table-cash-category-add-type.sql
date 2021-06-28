@@ -1,0 +1,1 @@
+alter table entry_category add column type varchar(30) not null;

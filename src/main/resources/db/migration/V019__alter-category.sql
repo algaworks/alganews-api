@@ -1,0 +1,1 @@
+alter table entry_category add constraint un_entry_category_name unique key (name);

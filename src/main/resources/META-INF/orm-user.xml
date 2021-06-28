@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+    version="2.2">
+
+	<named-query name="User.getRoleByUserId">
+		<query>
+			select u.role
+			from User u
+			where u.id = :userId
+		</query>
+	</named-query>
+
+	<named-query name="User.existsByEmailAndUserIdDiffersFrom">
+		<query>
+			select case when count(1) > 0 then true else false end
+			from User u
+			where u.email = :email
+			and u.id != :userId
+		</query>
+	</named-query>
+
+	<named-native-query name="User.getMetricsByUserId">
+		<query>
+			select coalesce (
+			(
+			select sum(post.earnings_total_amount )
+			from post
+			where editor_id = :id
+			and post.published is true
+			and  date_format(post.created_at, "%Y-%m-%v") = date_format(UTC_DATE, "%Y-%m-%v")
+			) , 0) as weeklyEarnings,
+			coalesce (
+			(
+			select sum(post.earnings_total_amount)
+			from post
+			where editor_id = :id
+			and post.published is true
+			and date_format(post.created_at, "%Y-%m") = date_format(UTC_DATE, "%Y-%m")
+			), 0) as monthlyEarnings,
+			coalesce (
+			(
+			select sum(post.earnings_total_amount)
+			from post
+			where editor_id = :id and post.published is true
+			), 0) as lifetimeEarnings,
+			coalesce (
+			(
+			select sum(post.earnings_words)
+			from post
+			where editor_id = :id
+			and post.published is true
+			and date_format(post.created_at, "%Y-%m-%v") = date_format(UTC_DATE, "%Y-%m-%v")
+			), 0) as weeklyWords,
+			coalesce (
+			(
+			select sum(post.earnings_words)
+			from post
+			where editor_id = :id
+			and post.published is true
+			and date_format(post.created_at, "%Y-%m") = date_format(UTC_DATE, "%Y-%m")
+			), 0) as monthlyWords,
+			coalesce (
+			(
+			select sum(post.earnings_words)
+			from post
+			where editor_id = :id and post.published is true
+			), 0) as lifetimeWords
+		</query>
+	</named-native-query>
+
+</entity-mappings>
