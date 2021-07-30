@@ -7,7 +7,7 @@ public class PostNotFoundException extends EntityNotFoundException {
 	private static final long serialVersionUID = 1L;
 
 	public PostNotFoundException(Long id) {
-		super(String.format("Não existe uma post com o código %s", id));
+		super(String.format("Não existe um post com o código %s", id));
 	}
 	
 }
