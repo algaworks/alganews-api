@@ -1,5 +1,7 @@
 package com.algaworks.alganews.security.infrastructure;
 
+import com.algaworks.alganews.users.domain.model.Role;
+import com.algaworks.alganews.users.domain.model.User;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,24 @@ public class DummyAlgaSecurity extends AlgaSecurity {
 	}
 
 	@Override
-	public boolean hasAuthority(String authorityName) {
+	public boolean hasAdminisrativeRoles() {
+		User user = super.getAuthenticatedUserOrFail();
+		return user.getRole().equals(Role.MANAGER) || user.getRole().equals(Role.ASSISTANT);
+	}
+
+	@Override
+	public boolean hasEditorRole() {
+		User user = super.getAuthenticatedUserOrFail();
+		return user.getRole().equals(Role.EDITOR);
+	}
+
+	@Override
+	public boolean hasAllWriteScope() {
+		return true;
+	}
+
+	@Override
+	public boolean hasAllReadScope() {
 		return true;
 	}
 
