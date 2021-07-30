@@ -21,6 +21,11 @@ public class DummyAlgaSecurity extends AlgaSecurity {
 	}
 
 	@Override
+	public boolean hasAuthority(String authorityName) {
+		return true;
+	}
+
+	@Override
 	public boolean isAuthenticated() {
 		return true;
 	}
