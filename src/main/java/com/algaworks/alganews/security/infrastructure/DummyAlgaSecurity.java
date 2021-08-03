@@ -23,9 +23,15 @@ public class DummyAlgaSecurity extends AlgaSecurity {
 	}
 
 	@Override
-	public boolean hasAdminisrativeRoles() {
+	public boolean hasManagerRole() {
 		User user = super.getAuthenticatedUserOrFail();
-		return user.getRole().equals(Role.MANAGER) || user.getRole().equals(Role.ASSISTANT);
+		return user.getRole().equals(Role.MANAGER);
+	}
+
+	@Override
+	public boolean hasAssistantRole() {
+		User user = super.getAuthenticatedUserOrFail();
+		return user.getRole().equals(Role.ASSISTANT);
 	}
 
 	@Override

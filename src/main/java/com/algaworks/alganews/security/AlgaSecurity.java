@@ -131,9 +131,9 @@ public abstract class AlgaSecurity {
 	}
 	
 	public boolean canApprovePayment() {
-		return hasAllWriteScope() && hasAuthority(ROLE_MANAGER);
+		return hasAllWriteScope() && hasManagerRole();
 	}
-	
+
 	public boolean canPaymentBeApproved(Payment payment) {
 		return payment.getCanBeApproved() && canApprovePayment();
 	}
@@ -209,9 +209,17 @@ public abstract class AlgaSecurity {
 	}
 	
 	public boolean hasAdminisrativeRoles() {
-		return hasAuthority(ROLE_MANAGER) || hasAuthority(ROLE_ASSISTANT);
+		return hasManagerRole() || hasAssistantRole();
 	}
-	
+
+	public boolean hasAssistantRole() {
+		return hasAuthority(ROLE_ASSISTANT);
+	}
+
+	public boolean hasManagerRole() {
+		return hasAuthority(ROLE_MANAGER);
+	}
+
 	public boolean hasEditorRole() {
 		return hasAuthority(ROLE_EDITOR);
 	}
