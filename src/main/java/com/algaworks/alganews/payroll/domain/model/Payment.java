@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -127,7 +128,12 @@ public class Payment extends AbstractAggregateRoot<Payment> {
 		
 		this.posts.forEach(this::sumPostEarnings);
 		
+		if (this.bonuses == null) {
+			return;
+		}
+		
 		BigDecimal bonusesTotalAmount = this.bonuses.stream()
+				.filter(Objects::nonNull)
 				.map(Bonus::getAmount)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		
