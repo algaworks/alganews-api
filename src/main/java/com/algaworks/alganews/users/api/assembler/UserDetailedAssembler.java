@@ -21,8 +21,8 @@ public class UserDetailedAssembler {
 	public UserDetailedModel toModel(User user, UserMetricsProjection metrics) {
 		UserDetailedModel model = modelMapper.map(user, UserDetailedModel.class);
 		model.setMetrics(userMetricsModelAssembler.toModel(metrics));
-		model.setCanBeActivated(algaSecurity.canActivateUserOfRole(user.getRole()) && !model.isActive());
-		model.setCanBeDeactivated(algaSecurity.canActivateUserOfRole(user.getRole()) && model.isActive());
+		model.setCanBeActivated(algaSecurity.canDeactivateUser(user));
+		model.setCanBeDeactivated(algaSecurity.canDeactivateUser(user));
 		model.setCanSensitiveDataBeUpdated(algaSecurity.canSensitiveDataBeUpdated(user));
 		return model;
 	}
