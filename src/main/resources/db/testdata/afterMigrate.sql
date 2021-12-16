@@ -22,8 +22,6 @@ alter table payment auto_increment = 1;
 alter table entry_category auto_increment = 1;
 alter table cash_flow_entry auto_increment = 1;
 
---Senha: alganews
-
 insert into `user` ( id, name, email, password, `role`, created_at, updated_at, active, avatar, bio, birthdate, phone, taxpayer_id, price_per_word, location_country, location_state, location_city, bank_account_bank_code, bank_account_agency, bank_account_number, bank_account_digit, bank_account_type ) values
 ( 1, 'João da Silva', 'joao.ger@alganews.com.br', '$2a$04$o1/wxlkdhHbUPjZXSBqftOGOEhhP0tehr7n/7.1xWazpIvcC21Bba', 'MANAGER', DATE_SUB(UTC_TIMESTAMP, INTERVAL 6 MONTH), DATE_SUB(UTC_TIMESTAMP, INTERVAL 6 MONTH), true, 'avatar-joao.jpeg', 'Donec consequat varius velit. Cras eros erat, vivamus vel scelerisque nunc.', '1993-10-28', '27912344321', '42919326007', 5.0, 'Brasil', 'São Paulo', 'São Paulo', '001', '231', '21241', '5', 'SAVING' ),
 ( 2, 'Maria Joaquina', 'maria.vnd@alganews.com.br', '$2a$04$o1/wxlkdhHbUPjZXSBqftOGOEhhP0tehr7n/7.1xWazpIvcC21Bba', 'MANAGER', DATE_SUB(UTC_TIMESTAMP, INTERVAL 6 MONTH), DATE_SUB(UTC_TIMESTAMP, INTERVAL 6 MONTH), true, 'avatar-maria.jpeg', 'Proin ac erat maximus ipsum dictum dignissim dignissim et urna. Donec laoreet magna sit amet magna auctor, facilisis faucibus dui porttitor. In vitae sagittis dolor, et interdum est.', '1991-01-18', '11911342321', '83883231053', 1.5, 'Brasil', 'Minas Gerais', 'Belo Horizonte', '002', '211', '10341', '2', 'CHECKING' ),
@@ -939,7 +937,7 @@ INSERT INTO payment_bonus (payment_id,title,amount) VALUES
 
 UPDATE post SET paid = TRUE WHERE id IN (6, 7, 8, 9, 10, 11, 12, 13);
 
-INSERT INTO alganews.cash_flow_entry (transacted_on,`type`,description,system_generated,category_id,amount,created_by_id,created_at,updated_at,updated_by_id) VALUES 
+INSERT INTO cash_flow_entry (transacted_on,`type`,description,system_generated,category_id,amount,created_by_id,created_at,updated_at,updated_by_id) VALUES 
 (DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 1 MONTH), INTERVAL 5 DAY),'EXPENSE', CONCAT('Posts de Débora Mendonça de ', DATE_FORMAT(DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 2 MONTH), INTERVAL 1 DAY), '%d/%m/%Y'), ' a ', DATE_FORMAT(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 1 MONTH), '%d/%m/%Y') ),      1,1,1563.00,1,DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 1 MONTH), INTERVAL 1 DAY),DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 1 MONTH), INTERVAL 1 DAY), 1),
 (DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 2 MONTH), INTERVAL 5 DAY),'EXPENSE', CONCAT('Posts de Débora Mendonça de ', DATE_FORMAT(DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 3 MONTH), INTERVAL 1 DAY), '%d/%m/%Y'), ' a ', DATE_FORMAT(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 2 MONTH), '%d/%m/%Y') ),      1,1,2641.00,1,DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 2 MONTH), INTERVAL 1 DAY),DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 2 MONTH), INTERVAL 1 DAY), 1),
 (DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 4 MONTH), INTERVAL 5 DAY),'EXPENSE', CONCAT('Posts de Carlos Lima de ',     DATE_FORMAT(DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 5 MONTH), INTERVAL 1 DAY), '%d/%m/%Y'), ' a ', DATE_FORMAT(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 4 MONTH), '%d/%m/%Y') ),      1,1,632.00,1, DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 4 MONTH), INTERVAL 1 DAY),DATE_ADD(DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 4 MONTH), INTERVAL 1 DAY), 1),
